@@ -14,6 +14,12 @@
     "jest": "^29.7.0"
   },
   "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "/calculadora/",
+      "/TDD/"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
