@@ -3,8 +3,8 @@ export class Ahorcado {
     this.palabra = 'arriesgar'
     this.cantidadDeVidas = 7
     this.nombreJugador = undefined
-    this.arregloSinRepetidos = [...new Set(palabra)].sort()
-    this.arregloAciertos = []
+    //this.arregloSinRepetidos = [...new Set(palabra)].sort()
+    //this.arregloAciertos = []
   }
 
   setNombre(nombre) {
