@@ -41,7 +41,7 @@ describe('Ahorcado', () => {
   test('Arriesgar letra y es correcta', () => {
     const letra = 'a'
     const result = miAhorcado.arriesgarLetra(letra)
-    expect(result).toBe('Letra correcta')
+    expect(result).toBe('Letra correcta: a _ _ _ _ _ _ a _')
   })
 
   test('Arriesgar palabra y es incorrecta', () => {
@@ -61,14 +61,20 @@ describe('Ahorcado', () => {
     expect(result).toBe(7)
   })
 
-  // test('ganar partida', () => {
-  //   const letras = ['a', 'r', 'i', 'e', 's', 'g']
-  //   let result
+  test('ganar partida', () => {
+    const letras = ['a', 'r', 'i', 'e', 's', 'g']
 
-  //   for (i = 0; i < 6; i++) {
-  //     result = miAhorcado.arriesgarLetra(letras[i])
-  //   }
+    letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
 
-  //   expect(result).toBe('Juego ganado')
-  // })
+    const result = miAhorcado.estadoPartida()
+
+    expect(result).toBe('Juego ganado')
+  })
 })
+
+// test('ganar partida', () => {
+//   const letras = ['a', 'r', 'i', 'e', 's', 'g']
+//   letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
+//   const result = miAhorcado.ganarPartida()
+//   expect(result).toBe(true)
+// })
