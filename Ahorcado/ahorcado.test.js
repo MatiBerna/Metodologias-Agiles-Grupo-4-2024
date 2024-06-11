@@ -19,14 +19,12 @@ describe('Ahorcado', () => {
     const nombre = ''
     let errorCapturado
 
-    // Intenta ejecutar la función y captura el error si se lanza
     try {
       miAhorcado.setNombre(nombre)
     } catch (error) {
       errorCapturado = error
     }
 
-    // Realiza la aserción en el error capturado
     expect(errorCapturado).toBeDefined()
     expect(errorCapturado.message).toMatch(/^Debe ingresar un nombre valido$/)
   })
@@ -61,6 +59,28 @@ describe('Ahorcado', () => {
     expect(result).toBe(7)
   })
 
+  test('Mostrar estado de partida perdida', () => {
+    const palabra = 'ykdjzlw'
+    palabra.split('').forEach((letra) => {
+      miAhorcado.arriesgarLetra(letra)
+    })
+
+    const result = miAhorcado.estadoPartida()
+
+    expect(result).toBe('Juego perdido')
+  })
+
+  test('Mostrar estado de partida en curso', () => {
+    const palabra = 'aij'
+    palabra.split('').forEach((letra) => {
+      miAhorcado.arriesgarLetra(letra)
+    })
+
+    const result = miAhorcado.estadoPartida()
+
+    expect(result).toBe('Palabra: a _ _ i _ _ _ a _. Vidas restantes: 6')
+  })
+
   test('ganar partida', () => {
     const letras = ['a', 'r', 'i', 'e', 's', 'g']
 
@@ -70,11 +90,28 @@ describe('Ahorcado', () => {
 
     expect(result).toBe('Juego ganado')
   })
-})
 
-// test('ganar partida', () => {
-//   const letras = ['a', 'r', 'i', 'e', 's', 'g']
-//   letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
-//   const result = miAhorcado.ganarPartida()
-//   expect(result).toBe(true)
-// })
+  test('calcularPuntuacion devuelve la puntuación correcta al ganar', () => {
+    const palabra = 'arriesgar'
+    const puntuacionEsperada = 330
+
+    palabra.split('').forEach((letra) => {
+      miAhorcado.arriesgarLetra(letra)
+    })
+
+    const result = miAhorcado.calcularPuntuacion()
+
+    expect(result).toBe(puntuacionEsperada)
+  })
+
+  test('calcularPuntuacion devuelve la puntuación correcta al perder', () => {
+    const palabra = 'bfjklmn'
+    const puntuacionEsperada = -35
+    palabra.split('').forEach((letra) => {
+      miAhorcado.arriesgarLetra(letra)
+    })
+
+    const result = miAhorcado.calcularPuntuacion()
+    expect(result).toBe(puntuacionEsperada)
+  })
+})
