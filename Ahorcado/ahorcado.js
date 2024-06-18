@@ -1,8 +1,13 @@
 export class Ahorcado {
-  constructor(dificultad) {
+  constructor(dificultad, tiempoLimite = 0) {
     this.palabrasFaciles = ['comer', 'casa', 'sol', 'gato', 'mesa', 'agua']
     this.palabrasIntermedias = ['caminante', 'humanidad', 'elefante', 'biblioteca', 'computadora', 'fotografia']
     this.palabrasDificiles = ['caleidoscopio', 'hidroeléctrica', 'jeroglífico', 'otorrinolaringólogo', 'anticonstitucionalidad']
+
+    this.tiempoLimite = tiempoLimite
+    this.tiempoRestante = tiempoLimite
+    this.timer = null
+
     this.palabra = 'arriesgar'
     this.cantidadDeVidas = 7
     this.nombreJugador = undefined
@@ -49,6 +54,23 @@ export class Ahorcado {
     this.estadoPalabra = Array(this.palabra.length).fill('_')
   }
 
+  iniciarTimer() {
+    this.timer = setInterval(() => {
+      this.tiempoRestante -= 1
+      if (this.tiempoRestante <= 0) {
+        clearInterval(this.timer)
+        this.timer = null
+        this.cantidadDeVidas = 0 // Considera el juego como perdido
+      }
+    }, 1000)
+  }
+  detenerTimer() {
+    if (this.timer) {
+      clearInterval(this.timer)
+      this.timer = null
+    }
+  }
+
   arriesgarLetra(letra) {
     letra = letra.toLowerCase()
     let acierto = false
@@ -63,7 +85,10 @@ export class Ahorcado {
 
     // Mensaje de retorno basado en si la letra estaba correcta o no
     if (acierto) {
-      return `Letra correcta: ${this.estadoPalabra.join(' ')}`
+      if (!this.estadoPalabra.includes('_')) {
+        this.detenerTimer()
+        return `Partida ganada`
+      } else return `Letra correcta: ${this.estadoPalabra.join(' ')}`
     } else {
       this.cantidadDeVidas -= 1
       return `Letra incorrecta, intentos restantes: ${this.cantidadDeVidas}`
@@ -71,8 +96,10 @@ export class Ahorcado {
   }
 
   arriesgarPalabra(palabra) {
-    if (palabra === this.palabra) return 'Juego ganado'
-    else {
+    if (palabra === this.palabra) {
+      this.detenerTimer() // Detiene timer si el juego se gana
+      return 'Juego ganado'
+    } else {
       this.cantidadDeVidas -= 2
       return `Palabra incorrecta, intentos restantes: ${this.cantidadDeVidas}`
     }
@@ -85,8 +112,10 @@ export class Ahorcado {
   estadoPartida() {
     // Verificar si todos los guiones bajos han sido reemplazados por letras
     if (!this.estadoPalabra.includes('_')) {
+      this.detenerTimer() //Detiene el timer si se gana el juego
       return 'Juego ganado'
     } else if (this.cantidadDeVidas <= 0) {
+      this.detenerTimer() //Detiene el timer si se pierde el juego
       return 'Juego perdido'
     } else {
       return `Palabra: ${this.estadoPalabra.join(' ')}. Vidas restantes: ${this.cantidadDeVidas}`

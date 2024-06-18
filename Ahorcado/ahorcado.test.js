@@ -144,4 +144,64 @@ describe('Ahorcado', () => {
     expect(errorCapturado).toBeDefined()
     expect(errorCapturado.message).toMatch(/^Dificultad no valida$/)
   })
+
+  test('El temporizador se inicializa correctamente', () => {
+    miAhorcado.iniciarTimer()
+    expect(miAhorcado.timer).toBeDefined()
+  })
+
+  test('El temporizador se detiene correctamente', () => {
+    miAhorcado.iniciarTimer()
+    miAhorcado.detenerTimer()
+    expect(miAhorcado.timer).toBeNull()
+  })
+
+  test('El tiempo se agota y se pierde el juego', (done) => {
+    miAhorcado.tiempoLimite = 1 // Para que el temporizador termine rápido
+    miAhorcado.iniciarTimer()
+    setTimeout(() => {
+      const result = miAhorcado.estadoPartida()
+      expect(result).toBe('Juego perdido')
+      done()
+    }, 1100)
+  })
+
+  test('El temporizador se detiene al ganar el juego', () => {
+    const letras = ['a', 'r', 'i', 'e', 's', 'g']
+    miAhorcado.iniciarTimer()
+
+    letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
+
+    expect(miAhorcado.timer).toBeNull()
+  })
+  test('El temporizador se inicializa correctamente', () => {
+    miAhorcado.iniciarTimer()
+    expect(miAhorcado.timer).toBeDefined()
+  })
+
+  test('El temporizador se detiene correctamente', () => {
+    miAhorcado.iniciarTimer()
+    miAhorcado.detenerTimer()
+    expect(miAhorcado.timer).toBeNull()
+  })
+
+  test('El tiempo se agota y se pierde el juego', (done) => {
+    miAhorcado.tiempoLimite = 1 // Para que el temporizador termine rápido
+    miAhorcado.iniciarTimer()
+
+    setTimeout(() => {
+      const result = miAhorcado.estadoPartida()
+      expect(result).toBe('Juego perdido')
+      done()
+    }, 1100)
+  })
+  test('El temporizador se detiene al ganar el juego', () => {
+    const letras = ['a', 'r', 'i', 'e', 's', 'g']
+    miAhorcado.tiempoLimite = 60
+    miAhorcado.iniciarTimer()
+
+    letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
+
+    expect(miAhorcado.timer).toBeNull()
+  })
 })
