@@ -1,11 +1,16 @@
 export class Ahorcado {
-  constructor() {
+  constructor(dificultad) {
+    this.palabrasFaciles = ['comer', 'casa', 'sol', 'gato', 'mesa', 'agua']
+    this.palabrasIntermedias = ['caminante', 'humanidad', 'elefante', 'biblioteca', 'computadora', 'fotografia']
+    this.palabrasDificiles = ['caleidoscopio', 'hidroeléctrica', 'jeroglífico', 'otorrinolaringólogo', 'anticonstitucionalidad']
     this.palabra = 'arriesgar'
     this.cantidadDeVidas = 7
     this.nombreJugador = undefined
     this.arregloSinRepetidos = [...new Set(this.palabra)].sort()
     this.estadoPalabra = Array(this.palabra.length).fill('_')
     this.puntuacion = 0
+
+    this.asignarPalabra(dificultad)
   }
 
   setNombre(nombre) {
@@ -15,6 +20,33 @@ export class Ahorcado {
       this.nombreJugador = nombre
       return nombre
     }
+  }
+
+  asignarPalabra(dificultad) {
+    let bancoDePalabras
+    switch (dificultad) {
+      case 'facil':
+        bancoDePalabras = this.palabrasFaciles
+        break
+      case 'intermedio':
+        bancoDePalabras = this.palabrasIntermedias
+        break
+      case 'dificil':
+        bancoDePalabras = this.palabrasDificiles
+        break
+      case '':
+        bancoDePalabras = ['arriesgar']
+        break
+      default:
+        throw new Error('Dificultad no valida')
+    }
+
+    const indiceAleatorio = Math.floor(Math.random() * bancoDePalabras.length)
+    this.palabra = bancoDePalabras[indiceAleatorio]
+
+    // Reiniciar el estado de la palabra y el arreglo sin repetidos
+    this.arregloSinRepetidos = [...new Set(this.palabra)].sort()
+    this.estadoPalabra = Array(this.palabra.length).fill('_')
   }
 
   arriesgarLetra(letra) {

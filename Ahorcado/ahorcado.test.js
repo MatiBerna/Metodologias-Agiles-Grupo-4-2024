@@ -4,7 +4,7 @@ describe('Ahorcado', () => {
   let miAhorcado
 
   beforeEach(() => {
-    miAhorcado = new Ahorcado()
+    miAhorcado = new Ahorcado('')
   })
 
   test('Ingreso de nombre', () => {
@@ -113,5 +113,35 @@ describe('Ahorcado', () => {
 
     const result = miAhorcado.calcularPuntuacion()
     expect(result).toBe(puntuacionEsperada)
+  })
+
+  test('Palabra random pertenece al banco de palabras para la dificultad facil', () => {
+    miAhorcado.asignarPalabra('facil')
+    expect(miAhorcado.palabrasFaciles).toContain(miAhorcado.palabra)
+  })
+
+  test('Palabra random pertenece al banco de palabras para la dificultad intermedio', () => {
+    const palabrasIntermedias = miAhorcado.palabrasIntermedias
+
+    miAhorcado.asignarPalabra('intermedio')
+
+    expect(palabrasIntermedias).toContain(miAhorcado.palabra)
+  })
+
+  test('Palabra random pertenece al banco de palabras para la dificultad dificil', () => {
+    miAhorcado.asignarPalabra('dificil')
+    expect(miAhorcado.palabrasDificiles).toContain(miAhorcado.palabra)
+  })
+
+  test('Palabra random no pertenece al banco de palabras', () => {
+    const palabra = 'jaksd'
+    let errorCapturado
+    try {
+      miAhorcado.asignarPalabra(palabra)
+    } catch (error) {
+      errorCapturado = error
+    }
+    expect(errorCapturado).toBeDefined()
+    expect(errorCapturado.message).toMatch(/^Dificultad no valida$/)
   })
 })
