@@ -18,6 +18,12 @@ export class Ahorcado {
     this.asignarPalabra(dificultad)
   }
 
+  setPalabra(palabra) {
+    if (palabra.trim() !== '') {
+      this.palabra = palabra.toLowerCase()
+    }
+  }
+
   setNombre(nombre) {
     if (nombre === '') {
       throw new Error('Debe ingresar un nombre valido')

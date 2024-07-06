@@ -204,4 +204,10 @@ describe('Ahorcado', () => {
 
     expect(miAhorcado.timer).toBeNull()
   })
+
+  test('Debería asignar la palabra "prueba"', () => {
+    const palabra = 'prueba'
+    miAhorcado.setPalabra(palabra)
+    expect(miAhorcado.palabra).toBe(palabra)
+  })
 })

@@ -1,0 +1,15 @@
+/* ahorcado.component.css */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+input {
+  margin: 10px 0;
+}
+
+button {
+  margin: 10px 0;
+  padding: 5px 10px;
+}

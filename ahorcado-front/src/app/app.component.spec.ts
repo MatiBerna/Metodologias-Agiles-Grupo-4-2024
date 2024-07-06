@@ -1,29 +1,93 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { Ahorcado } from './app.component';
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-    }).compileComponents();
+describe('Ahorcado', () => {
+  let miAhorcado: Ahorcado;
+
+  beforeEach(() => {
+    miAhorcado = new Ahorcado('arriesgar');
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('Ingreso de nombre', () => {
+    const nombre = 'Juan Perez';
+    const result = miAhorcado.setNombre(nombre);
+    expect(result).toBe(nombre);
   });
 
-  it(`should have the 'ahorcado-front' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('ahorcado-front');
+  it('Ingreso de nombre nulo', () => {
+    const nombre = '';
+    let errorCapturado: Error | undefined;
+
+    try {
+      miAhorcado.setNombre(nombre);
+    } catch (error) {
+      if (error instanceof Error) {
+        errorCapturado = error;
+      }
+    }
+
+    expect(errorCapturado).toBeDefined();
+    expect(errorCapturado!.message).toMatch(/^Debe ingresar un nombre valido$/);
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ahorcado-front');
+  it('Arriesgar letra, es incorrecta y pierde 1 vida', () => {
+    const letra = 'd';
+    const result = miAhorcado.arriesgarLetra(letra);
+    expect(result).toBe('Letra incorrecta, intentos restantes: 6');
+  });
+
+  it('Arriesgar letra y es correcta', () => {
+    const letra = 'a';
+    const result = miAhorcado.arriesgarLetra(letra);
+    expect(result).toBe('Letra correcta: a _ _ _ _ _ _ a _');
+  });
+
+  it('Arriesgar palabra y es incorrecta', () => {
+    const palabra = 'arriesgarte';
+    const result = miAhorcado.arriesgarPalabra(palabra);
+    expect(result).toBe('Palabra incorrecta, intentos restantes: 5');
+  });
+
+  it('Arriesgar palabra y es correcta', () => {
+    const palabra = 'arriesgar';
+    const result = miAhorcado.arriesgarPalabra(palabra);
+    expect(result).toBe('Juego ganado');
+  });
+
+  it('Mostrar vidas restantes', () => {
+    const result = miAhorcado.devuelveVidas();
+    expect(result).toBe(7);
+  });
+
+  it('Mostrar estado de partida perdida', () => {
+    const palabra = 'ykdjzlw';
+    palabra.split('').forEach((letra) => {
+      miAhorcado.arriesgarLetra(letra);
+    });
+
+    const result = miAhorcado.estadoPartida();
+    expect(result).toBe('Juego perdido');
+  });
+
+  it('Mostrar estado de partida en curso', () => {
+    const palabra = 'aij';
+    palabra.split('').forEach((letra) => {
+      miAhorcado.arriesgarLetra(letra);
+    });
+
+    const result = miAhorcado.estadoPartida();
+    expect(result).toBe('Palabra: a _ _ i _ _ _ a _. Vidas restantes: 6');
+  });
+
+  it('Ganar partida', () => {
+    const letras = ['a', 'r', 'i', 'e', 's', 'g'];
+    letras.forEach((letra) => miAhorcado.arriesgarLetra(letra));
+    const result = miAhorcado.estadoPartida();
+    expect(result).toBe('Juego ganado');
+  });
+
+  it('Debería asignar la palabra "prueba"', () => {
+    const palabra = 'prueba';
+    miAhorcado.setPalabra(palabra);
+    expect(miAhorcado.palabra).toBe(palabra);
   });
 });
