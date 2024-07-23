@@ -1,0 +1,50 @@
+<div class="ahorcado">
+  <h1>Juego del Ahorcado</h1>
+  <p>Palabra: {{ juego.estadoPalabra.join(" ") }}</p>
+  <p>Vidas restantes: {{ juego.cantidadDeVidas }}</p>
+  <p>{{ mensaje }}</p>
+
+  @if (!juegoIniciado) {
+  <div>
+    <h2>Ingrese una palabra para comenzar el juego</h2>
+    <form (ngSubmit)="iniciarNuevaPartida('', palabra)">
+      <input
+        type="text"
+        [(ngModel)]="palabra"
+        name="palabra"
+        required
+        placeholder="Ingrese una palabra"
+      />
+      <button type="submit">Comenzar Juego</button>
+    </form>
+    <button (click)="iniciarNuevaPartida('facil')">
+      Nueva Partida (Fácil)
+    </button>
+    <button (click)="iniciarNuevaPartida('intermedio')">
+      Nueva Partida (Intermedio)
+    </button>
+    <button (click)="iniciarNuevaPartida('dificil')">
+      Nueva Partida (Difícil)
+    </button>
+  </div>
+  } @if (juegoIniciado){
+  <div>
+    <input
+      [(ngModel)]="letra"
+      type="text"
+      maxlength="1"
+      placeholder="Ingresa una letra"
+    />
+    <button (click)="arriesgarLetra()">Arriesgar Letra</button>
+  </div>
+
+  <div>
+    <input
+      [(ngModel)]="palabraArriesgada"
+      type="text"
+      placeholder="Ingresa una palabra"
+    />
+    <button (click)="arriesgarPalabra()">Arriesgar Palabra</button>
+  </div>
+  }
+</div>

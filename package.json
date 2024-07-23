@@ -20,7 +20,8 @@
       "/dist/",
       "/calculadora/",
       "/TDD/",
-      "/TDD-bowling/"
+      "/TDD-bowling/",
+      "/ahorcado-front/"
     ],
     "moduleFileExtensions": [
       "ts",
