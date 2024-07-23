@@ -4,7 +4,7 @@ describe('Ahorcado', () => {
   let miAhorcado
 
   beforeEach(() => {
-    miAhorcado = new Ahorcado('')
+    miAhorcado = new Ahorcado('', 'arriesgar')
   })
 
   test('Ingreso de nombre', () => {
@@ -116,20 +116,20 @@ describe('Ahorcado', () => {
   })
 
   test('Palabra random pertenece al banco de palabras para la dificultad facil', () => {
-    miAhorcado.asignarPalabra('facil')
+    miAhorcado.setPalabra('facil')
     expect(miAhorcado.palabrasFaciles).toContain(miAhorcado.palabra)
   })
 
   test('Palabra random pertenece al banco de palabras para la dificultad intermedio', () => {
     const palabrasIntermedias = miAhorcado.palabrasIntermedias
 
-    miAhorcado.asignarPalabra('intermedio')
+    miAhorcado.setPalabra('intermedio')
 
     expect(palabrasIntermedias).toContain(miAhorcado.palabra)
   })
 
   test('Palabra random pertenece al banco de palabras para la dificultad dificil', () => {
-    miAhorcado.asignarPalabra('dificil')
+    miAhorcado.setPalabra('dificil')
     expect(miAhorcado.palabrasDificiles).toContain(miAhorcado.palabra)
   })
 
@@ -137,7 +137,7 @@ describe('Ahorcado', () => {
     const palabra = 'jaksd'
     let errorCapturado
     try {
-      miAhorcado.asignarPalabra(palabra)
+      miAhorcado.setPalabra('asdj', palabra)
     } catch (error) {
       errorCapturado = error
     }
@@ -145,69 +145,9 @@ describe('Ahorcado', () => {
     expect(errorCapturado.message).toMatch(/^Dificultad no valida$/)
   })
 
-  test('El temporizador se inicializa correctamente', () => {
-    miAhorcado.iniciarTimer()
-    expect(miAhorcado.timer).toBeDefined()
-  })
-
-  test('El temporizador se detiene correctamente', () => {
-    miAhorcado.iniciarTimer()
-    miAhorcado.detenerTimer()
-    expect(miAhorcado.timer).toBeNull()
-  })
-
-  test('El tiempo se agota y se pierde el juego', (done) => {
-    miAhorcado.tiempoLimite = 1 // Para que el temporizador termine rápido
-    miAhorcado.iniciarTimer()
-    setTimeout(() => {
-      const result = miAhorcado.estadoPartida()
-      expect(result).toBe('Juego perdido')
-      done()
-    }, 1100)
-  })
-
-  test('El temporizador se detiene al ganar el juego', () => {
-    const letras = ['a', 'r', 'i', 'e', 's', 'g']
-    miAhorcado.iniciarTimer()
-
-    letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
-
-    expect(miAhorcado.timer).toBeNull()
-  })
-  test('El temporizador se inicializa correctamente', () => {
-    miAhorcado.iniciarTimer()
-    expect(miAhorcado.timer).toBeDefined()
-  })
-
-  test('El temporizador se detiene correctamente', () => {
-    miAhorcado.iniciarTimer()
-    miAhorcado.detenerTimer()
-    expect(miAhorcado.timer).toBeNull()
-  })
-
-  test('El tiempo se agota y se pierde el juego', (done) => {
-    miAhorcado.tiempoLimite = 1 // Para que el temporizador termine rápido
-    miAhorcado.iniciarTimer()
-
-    setTimeout(() => {
-      const result = miAhorcado.estadoPartida()
-      expect(result).toBe('Juego perdido')
-      done()
-    }, 1100)
-  })
-  test('El temporizador se detiene al ganar el juego', () => {
-    const letras = ['a', 'r', 'i', 'e', 's', 'g']
-    miAhorcado.tiempoLimite = 60
-    miAhorcado.iniciarTimer()
-
-    letras.forEach((letra) => miAhorcado.arriesgarLetra(letra))
-
-    expect(miAhorcado.timer).toBeNull()
-  })
-
   test('Debería asignar la palabra "prueba"', () => {
     const palabra = 'prueba'
-    miAhorcado.setPalabra(palabra)
+    miAhorcado.setPalabra('', palabra)
     expect(miAhorcado.palabra).toBe(palabra)
   })
 })

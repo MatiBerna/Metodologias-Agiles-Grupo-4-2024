@@ -7,19 +7,60 @@ export class Ahorcado {
   nombreJugador: string | undefined;
   estadoPalabra: string[];
   puntuacion: number;
+  palabrasFaciles: string[];
+  palabrasIntermedias: string[];
+  palabrasDificiles: string[];
 
-  constructor(palabraIngresada: string) {
+  constructor(dificultad: string, palabraIngresada: string) {
     this.palabra = 'arriesgar';
     this.cantidadDeVidas = 7;
     this.nombreJugador = undefined;
     this.estadoPalabra = Array(palabraIngresada.length).fill('_');
     this.puntuacion = 0;
+    this.palabrasFaciles = ['comer', 'casa', 'sol', 'gato', 'mesa', 'agua'];
+    this.palabrasIntermedias = [
+      'caminante',
+      'humanidad',
+      'elefante',
+      'biblioteca',
+      'computadora',
+      'fotografia',
+    ];
+    this.palabrasDificiles = [
+      'caleidoscopio',
+      'hidroeléctrica',
+      'jeroglífico',
+      'otorrinolaringólogo',
+      'anticonstitucionalidad',
+    ];
 
-    this.setPalabra(palabraIngresada);
+    this.setPalabra(dificultad, palabraIngresada);
   }
-  setPalabra(palabra: string) {
-    if (palabra.trim() !== '') {
+  setPalabra(dificultad: string, palabra?: string) {
+    let bancoDePalabras;
+    switch (dificultad) {
+      case 'facil':
+        bancoDePalabras = this.palabrasFaciles;
+        break;
+      case 'intermedio':
+        bancoDePalabras = this.palabrasIntermedias;
+        break;
+      case 'dificil':
+        bancoDePalabras = this.palabrasDificiles;
+        break;
+      case '':
+        bancoDePalabras = ['arriesgar'];
+        break;
+      default:
+        throw new Error('Dificultad no valida');
+    }
+
+    const indiceAleatorio = Math.floor(Math.random() * bancoDePalabras.length);
+    this.palabra = bancoDePalabras[indiceAleatorio];
+
+    if (palabra && palabra.trim() !== '') {
       this.palabra = palabra.toLowerCase();
+      this.estadoPalabra = Array(this.palabra.length).fill('_');
     }
   }
 
@@ -83,26 +124,26 @@ export class Ahorcado {
     }
   }
 
-  calcularPuntuacion() {
-    let puntuacion = 0;
-    const puntosPorLetra = 10;
-    const bonificacionVictoria = 100;
-    const penalizacionError = 5;
-    const puntosPorVida = 20;
+  // calcularPuntuacion() {
+  //   let puntuacion = 0;
+  //   const puntosPorLetra = 10;
+  //   const bonificacionVictoria = 100;
+  //   const penalizacionError = 5;
+  //   const puntosPorVida = 20;
 
-    puntuacion +=
-      this.estadoPalabra.filter((letra) => letra !== '_').length *
-      puntosPorLetra;
+  //   puntuacion +=
+  //     this.estadoPalabra.filter((letra) => letra !== '_').length *
+  //     puntosPorLetra;
 
-    if (!this.estadoPalabra.includes('_')) {
-      puntuacion += bonificacionVictoria;
-      puntuacion += this.cantidadDeVidas * puntosPorVida;
-    } else {
-      puntuacion -= (7 - this.cantidadDeVidas) * penalizacionError;
-    }
+  //   if (!this.estadoPalabra.includes('_')) {
+  //     puntuacion += bonificacionVictoria;
+  //     puntuacion += this.cantidadDeVidas * puntosPorVida;
+  //   } else {
+  //     puntuacion -= (7 - this.cantidadDeVidas) * penalizacionError;
+  //   }
 
-    return puntuacion;
-  }
+  //   return puntuacion;
+  // }
 }
 
 @Component({
@@ -122,13 +163,13 @@ export class AppComponent implements OnInit {
   mensaje: string = '';
 
   constructor() {
-    this.juego = new Ahorcado(this.palabra);
+    this.juego = new Ahorcado('', this.palabra);
   }
 
   ngOnInit(): void {}
 
-  iniciarNuevaPartida(palabra: string): void {
-    this.juego = new Ahorcado(palabra);
+  iniciarNuevaPartida(dificultad: string, palabra: string): void {
+    this.juego = new Ahorcado(dificultad, palabra);
     this.juegoIniciado = true;
     this.mensaje = 'Nueva partida iniciada';
   }

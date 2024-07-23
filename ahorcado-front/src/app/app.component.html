@@ -7,7 +7,7 @@
   @if (!juegoIniciado) {
   <div>
     <h2>Ingrese una palabra para comenzar el juego</h2>
-    <form (ngSubmit)="iniciarNuevaPartida(palabra)">
+    <form (ngSubmit)="iniciarNuevaPartida('', palabra)">
       <input
         type="text"
         [(ngModel)]="palabra"
@@ -17,6 +17,15 @@
       />
       <button type="submit">Comenzar Juego</button>
     </form>
+    <button (click)="iniciarNuevaPartida('facil')">
+      Nueva Partida (Fácil)
+    </button>
+    <button (click)="iniciarNuevaPartida('intermedio')">
+      Nueva Partida (Intermedio)
+    </button>
+    <button (click)="iniciarNuevaPartida('dificil')">
+      Nueva Partida (Difícil)
+    </button>
   </div>
   } @if (juegoIniciado){
   <div>
@@ -37,13 +46,5 @@
     />
     <button (click)="arriesgarPalabra()">Arriesgar Palabra</button>
   </div>
-
-  <!-- <button (click)="iniciarNuevaPartida('facil')">Nueva Partida (Fácil)</button>
-  <button (click)="iniciarNuevaPartida('intermedio')">
-    Nueva Partida (Intermedio)
-  </button>
-  <button (click)="iniciarNuevaPartida('dificil')">
-    Nueva Partida (Difícil)
-  </button> -->
   }
 </div>
