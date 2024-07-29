@@ -19,7 +19,8 @@
       "/node_modules/",
       "/dist/",
       "/calculadora/",
-      "/TDD/"
+      "/TDD/",
+      "/ahoracado-front/"
     ],
     "moduleFileExtensions": [
       "ts",
