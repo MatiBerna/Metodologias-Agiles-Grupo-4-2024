@@ -51,7 +51,7 @@ describe('Ahorcado', () => {
   test('Arriesgar palabra y es correcta', () => {
     const palabra = 'arriesgar'
     const result = miAhorcado.arriesgarPalabra(palabra)
-    expect(result).toBe('Juego ganado')
+    expect(result).toBe('Juego ganado. La palabra era: arriesgar')
   })
 
   test('Mostar vidas restantes', () => {
@@ -67,7 +67,7 @@ describe('Ahorcado', () => {
 
     const result = miAhorcado.estadoPartida()
 
-    expect(result).toBe('Juego perdido')
+    expect(result).toBe('Juego perdido. La palabra era: arriesgar')
   })
 
   test('Mostrar estado de partida en curso', () => {
@@ -88,7 +88,7 @@ describe('Ahorcado', () => {
 
     const result = miAhorcado.estadoPartida()
 
-    expect(result).toBe('Juego ganado')
+    expect(result).toBe('Juego ganado. La palabra era: arriesgar')
   })
 
   test('calcularPuntuacion devuelve la puntuación correcta al ganar', () => {

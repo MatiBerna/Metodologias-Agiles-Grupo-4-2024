@@ -1,40 +1,43 @@
-<div style="text-align:center">
-  <h1>
-    Bienvenido al Juego del Ahorcado
-  </h1>
+<div class="container text-center">
+  <h1 class="my-4">Bienvenido al Juego del Ahorcado</h1>
 
-  <div *ngIf="!juegoIniciado">
+  <div *ngIf="!juegoIniciado" class="my-4">
     <h2>Selecciona una dificultad o ingresa una palabra:</h2>
-    <select [(ngModel)]="dificultad" [disabled]="palabraIngresada !== ''">
-      <option value="" disabled selected>Selecciona una dificultad</option>
-      <option value="facil">Fácil</option>
-      <option value="intermedio">Intermedio</option>
-      <option value="dificil">Difícil</option>
-    </select>
-    <input [(ngModel)]="palabraIngresada" placeholder="Palabra para iniciar (opcional)" [disabled]="dificultad !== ''"/>
-    <button (click)="iniciarJuego()">Iniciar Juego</button>
+    <div class="form-group">
+      <select class="form-control my-3" [(ngModel)]="dificultad" [disabled]="palabraIngresada !== ''">
+        <option value="" disabled selected>Selecciona una dificultad</option>
+        <option value="facil">Fácil</option>
+        <option value="intermedio">Intermedio</option>
+        <option value="dificil">Difícil</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control my-3" [(ngModel)]="palabraIngresada" placeholder="Palabra para iniciar (opcional)" [disabled]="dificultad !== ''"/>
+    </div>
+    <button class="btn btn-primary my-3" (click)="iniciarJuego()">Iniciar Juego</button>
   </div>
 
-  <div *ngIf="juegoIniciado">
-    <div>
-      <input [(ngModel)]="letra" placeholder="Arriesgar Letra" />
-      <button (click)="arriesgarLetra()">Arriesgar Letra</button>
+  <div *ngIf="juegoIniciado" class="my-4">
+    <div class="form-group">
+      <input type="text" class="form-control my-3" [(ngModel)]="letra" placeholder="Arriesgar Letra" />
+      <button class="btn btn-success my-3" (click)="arriesgarLetra()">Arriesgar Letra</button>
     </div>
 
-    <div>
-      <input [(ngModel)]="palabraIngresada" placeholder="Arriesgar Palabra" />
-      <button (click)="arriesgarPalabra()">Arriesgar Palabra</button>
+    <div class="form-group">
+      <input type="text" class="form-control my-3" [(ngModel)]="palabraIngresada" placeholder="Arriesgar Palabra" />
+      <button class="btn btn-warning my-3" (click)="arriesgarPalabra()">Arriesgar Palabra</button>
     </div>
   </div>
 
-  <div *ngIf="juegoIniciado">
-    <button (click)="getVidas()">Consultar Vidas</button>
-    <button (click)="getEstado()">Consultar Estado</button>
-    <button (click)="getPuntuacion()">Consultar Puntuación</button>
+  <div *ngIf="juegoIniciado" class="my-4">
+    <div class="alert alert-info" *ngIf="mensaje">{{ mensaje }}</div>
+    <div class="alert alert-secondary">{{ estado }}</div>
+    <!-- <div class="alert alert-danger">Vidas restantes: {{ vidas }}</div> -->
+    <div class="alert alert-primary">Puntuación: {{ puntuacion }}</div>
   </div>
 
-  <p>{{ mensaje }}</p>
-  <p>Estado: {{ estado }}</p>
-  <p>Vidas restantes: {{ vidas }}</p>
-  <p>Puntuación: {{ puntuacion }}</p>
+    <!-- Botón de reinicio -->
+    <div *ngIf="juegoTerminado" class="my-4">
+      <button class="btn btn-secondary my-3" (click)="reiniciarJuego()">Volver a la Página de Inicio</button>
+    </div>
 </div>

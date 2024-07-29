@@ -15,6 +15,7 @@ export class AppComponent {
   estado: string='';
   puntuacion: number=0;
   juegoIniciado: boolean = false;
+  juegoTerminado: boolean = false;
 
   constructor(private ahorcadoService: AhorcadoService) { }
 
@@ -22,6 +23,7 @@ export class AppComponent {
     this.ahorcadoService.iniciarJuego(this.dificultad, this.palabraIngresada).subscribe(response => {
       this.mensaje = response.mensaje;
       this.estado = response.estado;
+      this.palabraIngresada = '';
       this.getVidas();
       this.juegoIniciado = true;
     }, error => {
@@ -33,6 +35,10 @@ export class AppComponent {
     this.ahorcadoService.arriesgarLetra(this.letra).subscribe(response => {
       this.mensaje = response.resultado;
       this.estado = response.estado;
+
+      if (this.mensaje.includes("Juego ganado") || this.mensaje.includes("Juego perdido")) {
+        this.juegoTerminado = true;
+      }
       this.getVidas();
       this.getPuntuacion();
     }, error => {
@@ -44,6 +50,10 @@ export class AppComponent {
     this.ahorcadoService.arriesgarPalabra(this.palabraIngresada).subscribe(response => {
       this.mensaje = response.resultado;
       this.estado = response.estado;
+
+      if (this.mensaje.includes("Juego ganado") || this.mensaje.includes("Juego perdido")) {
+        this.juegoTerminado = true;
+      }
       this.getVidas();
       this.getPuntuacion();
     }, error => {
@@ -74,4 +84,21 @@ export class AppComponent {
       console.error('Error al obtener puntuación:', error);
     });
   }
+
+  reiniciarJuego() {
+    // Resetear todas las variables
+    this.palabraIngresada = '';
+    this.dificultad = '';
+    this.letra = '';
+    this.mensaje = '';
+    this.estado = '';
+    this.vidas = 7;
+    this.puntuacion = 0;
+    this.juegoIniciado = false;
+    this.juegoTerminado = false;
+  }
+
+
 }
+
+
