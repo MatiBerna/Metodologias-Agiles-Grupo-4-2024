@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "",
-  "type": "module",
+  "type": "commonjs",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -33,7 +33,9 @@
     ]
   },
   "devDependencies": {
+    "@types/node": "^22.1.0",
     "coveralls": "^3.1.1",
+    "cypress": "^13.13.2",
     "eslint": "^9.2.0",
     "globals": "^15.2.0"
   }

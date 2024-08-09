@@ -19,19 +19,19 @@
 
   <div *ngIf="juegoIniciado" class="my-4">
     <div class="form-group">
-      <input type="text" class="form-control my-3" [(ngModel)]="letra" placeholder="Arriesgar Letra" />
-      <button class="btn btn-success my-3" (click)="arriesgarLetra()">Arriesgar Letra</button>
+      <input type="text" class="form-control my-3" [(ngModel)]="letra" placeholder="Arriesgar Letra" [disabled]="juegoTerminado" />
+      <button class="btn btn-success my-3" (click)="arriesgarLetra()" [disabled]="juegoTerminado">Arriesgar Letra</button>
     </div>
-
+  
     <div class="form-group">
-      <input type="text" class="form-control my-3" [(ngModel)]="palabraIngresada" placeholder="Arriesgar Palabra" />
-      <button class="btn btn-warning my-3" (click)="arriesgarPalabra()">Arriesgar Palabra</button>
+      <input type="text" class="form-control my-3" [(ngModel)]="palabraIngresada" placeholder="Arriesgar Palabra" [disabled]="juegoTerminado" />
+      <button class="btn btn-warning my-3" (click)="arriesgarPalabra()" [disabled]="juegoTerminado">Arriesgar Palabra</button>
     </div>
   </div>
 
   <div *ngIf="juegoIniciado" class="my-4">
     <div class="alert alert-info" *ngIf="mensaje">{{ mensaje }}</div>
-    <div class="alert alert-secondary">{{ estado }}</div>
+    <div *ngIf="!juegoTerminado" class="alert alert-secondary">{{ estado }}</div>
     <!-- <div class="alert alert-danger">Vidas restantes: {{ vidas }}</div> -->
     <div class="alert alert-primary">Puntuación: {{ puntuacion }}</div>
   </div>

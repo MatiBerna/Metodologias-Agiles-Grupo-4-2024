@@ -32,12 +32,14 @@ export class AppComponent {
   }
 
   arriesgarLetra() {
+    if (this.juegoTerminado) return; // Evitar seguir jugando si el juego ha terminado
+  
     this.ahorcadoService.arriesgarLetra(this.letra).subscribe(response => {
       this.mensaje = response.resultado;
       this.estado = response.estado;
-
+  
       if (this.mensaje.includes("Juego ganado") || this.mensaje.includes("Juego perdido")) {
-        this.juegoTerminado = true;
+        this.juegoTerminado = true; // Marcar el juego como terminado
       }
       this.getVidas();
       this.getPuntuacion();
@@ -45,14 +47,16 @@ export class AppComponent {
       console.error('Error al arriesgar letra:', error);
     });
   }
-
+  
   arriesgarPalabra() {
+    if (this.juegoTerminado) return; // Evitar seguir jugando si el juego ha terminado
+  
     this.ahorcadoService.arriesgarPalabra(this.palabraIngresada).subscribe(response => {
       this.mensaje = response.resultado;
       this.estado = response.estado;
-
+  
       if (this.mensaje.includes("Juego ganado") || this.mensaje.includes("Juego perdido")) {
-        this.juegoTerminado = true;
+        this.juegoTerminado = true; // Marcar el juego como terminado
       }
       this.getVidas();
       this.getPuntuacion();
