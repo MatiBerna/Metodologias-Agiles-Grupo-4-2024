@@ -3,7 +3,10 @@ name: Ejecutar pruebas de aceptación
 on:
   push:
     branches:
-      - main
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
