@@ -19,7 +19,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 18
 
       - name: Instalar dependencias del frontend
         run: npm install --prefix Ahorcado/ahorcado-front
@@ -27,11 +27,14 @@ jobs:
       - name: Construir el frontend
         run: npm run build --prefix Ahorcado/ahorcado-front
 
-      - name: Instalar dependencias del backend
+      - name: Instalar dependencias del backend y cypress
         run: npm install --prefix Ahorcado
 
-      - name: Ejecutar el backend y cypress
-        run: npm start --prefix Ahorcado
+      - name: Ejecutar el backend
+        run: npm start --prefix Ahorcado &
+
+      - name: Ejecutar el frontend
+        run: npm start --prefix Ahorcado/ahorcado-front &
 
       - name: Esperar a que el backend esté listo
         run: sleep 10
