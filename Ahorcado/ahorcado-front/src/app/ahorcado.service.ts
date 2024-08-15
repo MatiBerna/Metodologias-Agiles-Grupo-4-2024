@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AhorcadoService {
+  private baseUrl = environment.apiUrl;
 
-  private baseUrl = 'http://localhost:3000';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   iniciarJuego(dificultad: string, palabraIngresada: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/iniciar-juego`, { dificultad, palabraIngresada });
+    return this.http.post(`${this.baseUrl}/iniciar-juego`, {
+      dificultad,
+      palabraIngresada,
+    });
   }
 
   arriesgarLetra(letra: string): Observable<any> {
