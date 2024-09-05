@@ -40,4 +40,4 @@ jobs:
         run: sleep 10
 
       - name: Ejecutar pruebas de Cypress
-        run: npm run test --prefix Ahorcado
+        run: npx cypress run --prefix Ahorcado
